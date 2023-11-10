@@ -8,7 +8,11 @@ export class UserService {
 
   // Get all users
   async getAllUsers(): Promise<User[]> {
-    return this.prisma.user.findMany();
+    return this.prisma.user.findMany({
+      include: {
+        Todo: true, // Include the todos relation
+      },
+    });
   }
 
   // Get user by id

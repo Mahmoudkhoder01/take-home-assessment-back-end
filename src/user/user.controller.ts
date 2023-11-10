@@ -68,30 +68,6 @@ export class UserController {
     }
   }
 
-  @Delete(':id')
-  async deleteUser(
-    @Param('id') id: number,
-    @Req() req: Request,
-    @Res() res: Response,
-  ): Promise<Response<User>> {
-    try {
-      const result = await this.userService.deleteUser(id);
-
-      if ('message' in result) {
-        // Handle the case where the user was not found
-        return res.status(404).json({ message: result.message });
-      }
-
-      return res
-        .status(200)
-        .json({ message: 'User delted successfully!', result });
-    } catch (error) {
-      return res
-        .status(500)
-        .json({ message: 'Internal server error!', error: error.message });
-    }
-  }
-
   @Put(':id')
   async updateUser(
     @Param('id') id: number,
@@ -109,7 +85,31 @@ export class UserController {
       // Handle the case where the user was successfully updated
       return res
         .status(200)
-        .json({ message: 'User updated successfully!', result });
+        .json({ message: 'User updated successfully!', data_updated: result });
+    } catch (error) {
+      return res
+        .status(500)
+        .json({ message: 'Internal server error!', error: error.message });
+    }
+  }
+
+  @Delete(':id')
+  async deleteUser(
+    @Param('id') id: number,
+    @Req() req: Request,
+    @Res() res: Response,
+  ): Promise<Response<User>> {
+    try {
+      const result = await this.userService.deleteUser(id);
+
+      if ('message' in result) {
+        // Handle the case where the user was not found
+        return res.status(404).json({ message: result.message });
+      }
+
+      return res
+        .status(200)
+        .json({ message: 'User delted successfully!', data_deleted: result });
     } catch (error) {
       return res
         .status(500)

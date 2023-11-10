@@ -55,4 +55,20 @@ export class TodoService {
       },
     });
   }
+
+  async deleteTodo(id: number): Promise<Todo | { message: string }> {
+    // Check if the todo with the specified id exists
+    const existingTodo = await this.prisma.todo.findUnique({
+      where: { id: Number(id) },
+    });
+
+    if (!existingTodo) {
+      return { message: 'Todo not found.' };
+    }
+
+    // Todo found, proceed with deletion
+    return this.prisma.todo.delete({
+      where: { id: Number(id) },
+    });
+  }
 }

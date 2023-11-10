@@ -7,6 +7,7 @@ import {
   Body,
   Put,
   Param,
+  Delete,
 } from '@nestjs/common';
 import { Request, Response } from 'express';
 import { TodoService } from './todo.service';
@@ -56,7 +57,33 @@ export class TodoController {
     try {
       const result = await this.todoService.updateTodo(id, data);
 
-      return res.status(200).json({ message: 'Success!', result: result });
+      return res
+        .status(200)
+        .json({ message: 'Todo updated successfully!', data_updated: result });
+    } catch (error) {
+      return res
+        .status(500)
+        .json({ message: 'Internal server error!', error: error.message });
+    }
+  }
+
+  @Delete(':id')
+  async deleteTodo(
+    @Param('id') id: number,
+    @Req() req: Request,
+    @Res() res: Response,
+  ) {
+    try {
+      const result = await this.todoService.deleteTodo(id);
+
+      if ('message' in result) {
+        // Handle the case where the todo was not found
+        return res.status(404).json({ message: result.message });
+      }
+
+      return res
+        .status(200)
+        .json({ message: 'Todo delted successfully!', data_deleted: result });
     } catch (error) {
       return res
         .status(500)

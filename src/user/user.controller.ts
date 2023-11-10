@@ -13,7 +13,7 @@ import {
 import { User } from './user.model';
 import { UserService } from './user.service';
 import { Request, Response } from 'express';
-import { JwtAuthGuard } from 'src/authentication/auth.guard';
+import { JwtAuthGuard } from '../authentication/auth.guard';
 
 @Controller('user')
 export class UserController {

@@ -8,7 +8,11 @@ export class UserService {
 
   // Get all users
   async getAllUsers(): Promise<User[]> {
-    return this.prisma.user.findMany();
+    return this.prisma.user.findMany({
+      include: {
+        Todo: true, // Include the todos relation
+      },
+    });
   }
 
   // Get user by id
@@ -49,18 +53,16 @@ export class UserService {
 
   // Delte user by id
   async deleteUser(id: number): Promise<User | { message: string }> {
-    // Check if the user with the specified id exists
-    const existingUser = await this.prisma.user.findUnique({
-      where: { id: Number(id) },
+    // Find and delete associated todos
+    const todosToDelete = await this.prisma.todo.findMany({
+      where: { userId: Number(id) },
     });
 
-    if (!existingUser) {
-      return { message: 'User not found.' };
+    for (const todo of todosToDelete) {
+      await this.prisma.todo.delete({ where: { id: todo.id } });
     }
 
-    // User found, proceed with deletion
-    return this.prisma.user.delete({
-      where: { id: Number(id) },
-    });
+    // Proceed with deleting the user
+    return this.prisma.user.delete({ where: { id: Number(id) } });
   }
 }

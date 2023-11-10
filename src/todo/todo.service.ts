@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { PrismaService } from 'src/prisma.service';
+import { PrismaService } from '../prisma.service';
 import { Todo, User } from '@prisma/client';
 
 @Injectable()
@@ -20,6 +20,34 @@ export class TodoService {
     return this.prisma.user.findUnique({
       where: { id: userId },
     });
+  }
+
+  // Retrieve remaining todos of the logged-in user ordered by date and priority
+  async getRemainingTodosForUser(userId: number): Promise<Todo[]> {
+    try {
+      const todos = await this.prisma.todo.findMany({
+        where: {
+          userId: Number(userId),
+        },
+        orderBy: [
+          {
+            date: 'desc',
+          },
+          {
+            priority: 'desc',
+          },
+        ],
+        include: {
+          User: true,
+        },
+      });
+
+      return todos;
+    } catch (error) {
+      // Handle errors here (e.g., log the error)
+      console.error('Error fetching remaining todos:', error);
+      return []; // Return an empty array or handle the error appropriately
+    }
   }
 
   // Create a new todo

@@ -31,6 +31,13 @@ export class TodoController {
     }
   }
 
+  @Get('remaining/:userId')
+  async getRemainingTodosForUser(
+    @Param('userId') userId: number,
+  ): Promise<Todo[]> {
+    return this.todoService.getRemainingTodosForUser(userId);
+  }
+
   @Post()
   async createTodo(
     @Body() postData: Todo,

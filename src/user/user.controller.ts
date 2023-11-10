@@ -8,16 +8,19 @@ import {
   Param,
   Req,
   Res,
+  UseGuards,
 } from '@nestjs/common';
 import { User } from './user.model';
 import { UserService } from './user.service';
 import { Request, Response } from 'express';
+import { JwtAuthGuard } from 'src/authentication/auth.guard';
 
 @Controller('user')
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
   @Get()
+  @UseGuards(JwtAuthGuard)
   async getAllUsers(@Req() req: Request, @Res() res: Response): Promise<any> {
     try {
       const result = await this.userService.getAllUsers();

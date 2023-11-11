@@ -40,7 +40,7 @@ export class AuthController {
     try {
       // Check if the new email is already in use by another user
       const existingUserWithSameEmail = await this.userService.getUserByEmail(
-        registerDto.email, // Use registerDto.email instead of postData.email
+        registerDto.email,
       );
 
       if (existingUserWithSameEmail) {

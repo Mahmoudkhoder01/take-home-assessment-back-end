@@ -41,7 +41,20 @@ export class UserController {
     @Res() res: Response,
   ): Promise<Response<User>> {
     try {
+      // Check if the new email is already in use by another user
+      const existingUserWithSameEmail = await this.userService.getUserByEmail(
+        postData.email,
+      );
+
+      if (existingUserWithSameEmail) {
+        // Handle the case where the email is already in use
+        return res
+          .status(400)
+          .json({ message: 'Email is already in use by another user.' });
+      }
+
       const result = await this.userService.createUser(postData);
+
       return res.status(200).json({ message: 'Success!', result: result });
     } catch (error) {
       return res
@@ -82,6 +95,7 @@ export class UserController {
         // Handle the case where the email is already in use
         return res.status(400).json({ message: result.message });
       }
+
       // Handle the case where the user was successfully updated
       return res
         .status(200)

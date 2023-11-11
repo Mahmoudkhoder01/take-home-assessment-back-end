@@ -15,9 +15,27 @@ export class UserService {
     });
   }
 
-  // Get user by id
+  // Get user by id and include their todos with specific sorting
   async getUserById(id: number): Promise<User | null> {
-    return this.prisma.user.findUnique({ where: { id: Number(id) } });
+    const currentDate = new Date();
+    currentDate.setHours(0, 0, 0, 0); // Set the time to midnight (00:00:00.000)
+
+    return this.prisma.user.findUnique({
+      where: { id: Number(id) },
+      include: {
+        Todo: {
+          where: {
+            date: {
+              gte: currentDate, // Filter for date greater than or equal to today
+            },
+          },
+          orderBy: [
+            { date: 'desc' }, // Sort by creation date (new to old)
+            { priority: 'desc' }, // Then, sort by priority (desc)
+          ],
+        },
+      },
+    });
   }
 
   async getUserByEmail(email: string): Promise<User | null> {

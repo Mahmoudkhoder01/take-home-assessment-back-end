@@ -20,11 +20,22 @@ export class UserService {
     return this.prisma.user.findUnique({ where: { id: Number(id) } });
   }
 
+  async getUserByEmail(email: string): Promise<User | null> {
+    return this.prisma.user.findFirst({
+      where: {
+        email,
+      },
+    });
+  }
+
   // Create a new user
   async createUser(data: User): Promise<User> {
-    return this.prisma.user.create({
+    // If the email is not taken, proceed with user creation
+    const newUser = await this.prisma.user.create({
       data,
     });
+
+    return newUser;
   }
 
   // Update user by id

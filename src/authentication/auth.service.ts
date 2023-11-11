@@ -41,6 +41,16 @@ export class AuthService {
   }
 
   async register(createDto: RegisterUserDto): Promise<any> {
+    // Check if the new email is already in use by another user
+    const existingUserWithSameEmail = await this.userService.getUserByEmail(
+      createDto.email,
+    );
+
+    if (existingUserWithSameEmail) {
+      return { message: 'Email is already in use by another user.' };
+    }
+
+    // If the email is not taken, proceed with user creation
     const createUser = new User();
     createUser.name = createDto.name;
     createUser.email = createDto.email;

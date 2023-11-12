@@ -26,6 +26,41 @@ GET http://localhost:5000/user
 GET http://localhost:5000/user/:id
 ```
 
+#### Create Auth User
+
+**API**: `POST /auth/register`
+
+**Description**: This API endpoint allows you to create a new user with the date below, and return the token.
+
+**Object Should Passed As JSON**: `{
+    "name": string,
+    "email": string,
+    "password": string
+}`
+
+**Example**:
+
+```http
+POST http://localhost:5000/auth/register
+```
+
+#### Login User
+
+**API**: `POST /auth/login`
+
+**Description**: This API endpoint allows you to login the user with the date below, and return the token.
+
+**Object Should Passed As JSON**: `{
+    "email": string,
+    "password": string
+}`
+
+**Example**:
+
+```http
+POST http://localhost:5000/auth/login
+```
+
 #### Create User
 
 **API**: `POST /user`

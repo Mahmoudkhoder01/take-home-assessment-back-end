@@ -54,15 +54,15 @@ export class TodoController {
     }
   }
 
-  @Put(':id')
+  @Put()
   async updateTodo(
-    @Param('id') id: number,
-    @Body() data: Todo,
+    @Body() data: { id: number; todo: Todo },
     @Req() req: Request,
     @Res() res: Response,
   ) {
     try {
-      const result = await this.todoService.updateTodo(id, data);
+      const { id, todo } = data;
+      const result = await this.todoService.updateTodo(id, todo);
 
       return res
         .status(200)

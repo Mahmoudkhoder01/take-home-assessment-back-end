@@ -13,7 +13,7 @@ import {
 import { Request, Response } from 'express';
 import { TodoService } from './todo.service';
 import { Todo } from '@prisma/client';
-import { JwtAuthGuard } from 'src/authentication/auth.guard';
+import { JwtAuthGuard } from '../authentication/auth.guard';
 
 @Controller('todo')
 export class TodoController {

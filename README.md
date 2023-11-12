@@ -1,73 +1,155 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
-</p>
+## APIs
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+### USER APIS
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+#### Get All Users
 
-## Description
+**API**: `GET /user`
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+**Description**: This API endpoint allows you to retrieve a list of all users.
 
-## Installation
+**Example**:
 
-```bash
-$ npm install
+```http
+GET http://localhost:5000/user
 ```
 
-## Running the app
+#### Get User By Id
 
-```bash
-# development
-$ npm run start
+**API**: `GET /user/:id`
 
-# watch mode
-$ npm run start:dev
+**Description**: This API endpoint allows you to retrieve the user by the id passed in the param.
 
-# production mode
-$ npm run start:prod
+**Example**:
+
+```http
+GET http://localhost:5000/user/:id
 ```
 
-## Test
+#### Create User
 
-```bash
-# unit tests
-$ npm run test
+**API**: `POST /user`
 
-# e2e tests
-$ npm run test:e2e
+**Description**: This API endpoint allows you to create a new user with the date below.
 
-# test coverage
-$ npm run test:cov
+**Object Should Passed As JSON**: `{
+    "name": string,
+    "email": string,
+    "password": string
+}`
+
+**Example**:
+
+```http
+POST http://localhost:5000/user
 ```
 
-## Support
+#### Update User
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+**API**: `PUT /user/:id`
 
-## Stay in touch
+**Description**: This API endpoint allows you to edit a user by the id passed in the param.
 
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+**Object Should Passed As JSON**: `{
+    "name": string,
+    "email": string,
+    "password": string
+}`
 
-## License
+**Example**:
 
-Nest is [MIT licensed](LICENSE).
+```http
+PUT http://localhost:5000/user/:id
+```
+
+#### Delete User
+
+**API**: `DELETE /user/:id`
+
+**Description**: This API endpoint allows you to delete a user by the id passed in the param.
+
+**Example**:
+
+```http
+DELETE http://localhost:5000/user/:id
+```
+
+### TODO APIS
+
+#### Get All Todo
+
+**API**: `GET /todo`
+
+**Description**: This API endpoint allows you to retrieve a list of all todos.
+
+**Example**:
+
+```http
+GET http://localhost:5000/todo
+```
+
+#### Get Todo By Id
+
+**API**: `GET /todo/:id`
+
+**Description**: This API endpoint allows you to retrieve the todo by the id passed in the param.
+
+**Example**:
+
+```http
+GET http://localhost:5000/todo/:id
+```
+
+#### Create Todo
+
+**API**: `POST /todo`
+
+**Description**: This API endpoint allows you to create a new todo with the date below.
+
+**Object Should Passed As JSON**: `{
+    "description": string,
+    "priority": string,
+    "userID": number,
+    "date": string,
+    "completed": boolean,
+}`
+
+**Example**:
+
+```http
+POST http://localhost:5000/todo
+```
+
+#### Update Todo
+
+**API**: `PUT /todo/`
+
+**Description**: This API endpoint allows you to edit a todo by the id passed in the body.
+
+**Object Should Passed As JSON**: `{
+    "id": number,
+    "todo": {
+        "description": string,
+        "priority": string,
+        "date": string,
+        "completed": boolean,
+     }
+}`
+
+**Example**:
+
+```http
+PUT http://localhost:5000/todo/:id
+```
+
+#### Delete Todo
+
+**API**: `DELETE /todo/`
+
+**Description**: This API endpoint allows you to delete a todo by the id passed in the param.
+
+**Example**:
+
+```http
+DELETE http://localhost:5000/todo/:id
+```

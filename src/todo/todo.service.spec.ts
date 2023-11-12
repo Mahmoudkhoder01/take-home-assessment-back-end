@@ -34,6 +34,7 @@ describe('TodoService', () => {
         description: 'Todo 1',
         priority: 'LOW',
         userId: 1,
+
         date: '2015-11-04',
         completed: true,
         createdAt: new Date(),

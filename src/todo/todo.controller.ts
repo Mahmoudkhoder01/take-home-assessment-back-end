@@ -19,6 +19,11 @@ import { JwtAuthGuard } from 'src/authentication/auth.guard';
 export class TodoController {
   constructor(private readonly todoService: TodoService) {}
 
+  /**
+   * we have used get decorator to get all the todo's list
+   * so the API URL will be
+   * GET http://localhost:3000/todo
+   */
   @Get()
   async getAllTodos(@Req() req: Request, @Res() res: Response): Promise<any> {
     try {
@@ -33,6 +38,12 @@ export class TodoController {
     }
   }
 
+  /**
+   * we have used get decorator with id param to get id from request
+   * so the API URL will be
+   * GET http://localhost:3000/todo/:id
+   * @returns user with his Todos ordered by date and priority
+   */
   @Get('remaining/:userId')
   @UseGuards(JwtAuthGuard)
   async getRemainingTodosForUser(
@@ -41,6 +52,12 @@ export class TodoController {
     return this.todoService.getRemainingTodosForUser(userId);
   }
 
+  /**
+   * Post decorator represents method of request as we have used post decorator the method
+   * of this API will be post.
+   * so the API URL to create Todo will be
+   * POST http://localhost:3000/todo
+   */
   @Post()
   @UseGuards(JwtAuthGuard)
   async createTodo(
@@ -58,6 +75,11 @@ export class TodoController {
     }
   }
 
+  /**
+   * we have used put decorator with id passed in the body
+   * so the API URL will be
+   * PUT http://localhost:3000/todo
+   */
   @Put()
   @UseGuards(JwtAuthGuard)
   async updateTodo(
@@ -79,6 +101,11 @@ export class TodoController {
     }
   }
 
+  /**
+   * we have used Delete decorator with id param to get id from request
+   * so the API URL will be
+   * DELETE http://localhost:3000/todo/:id
+   */
   @Delete(':id')
   @UseGuards(JwtAuthGuard)
   async deleteTodo(

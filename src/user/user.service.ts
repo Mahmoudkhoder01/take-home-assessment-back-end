@@ -19,6 +19,7 @@ export class UserService {
   async getUserById(id: number): Promise<User | null> {
     const currentDate = new Date();
     currentDate.setHours(0, 0, 0, 0); // Set the time to midnight (00:00:00.000)
+    const currentDateStr = currentDate.toISOString().split('T')[0];
 
     return this.prisma.user.findUnique({
       where: { id: Number(id) },
@@ -26,7 +27,7 @@ export class UserService {
         Todo: {
           where: {
             date: {
-              gte: currentDate, // Filter for date greater than or equal to today
+              gte: currentDateStr, // Filter for date greater than or equal to today
             },
           },
           orderBy: [

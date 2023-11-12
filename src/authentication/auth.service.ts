@@ -15,6 +15,12 @@ export class AuthService {
     private readonly userService: UserService,
   ) {}
 
+  /**
+   * this is function is used to create Todo in Todo service.
+   * @param loginDto this will type of data in which
+   * we have defined what are the keys we are expecting from body
+   * @returns promise of user with the token
+   */
   async login(loginDto: LoginDto): Promise<any> {
     const { email, password } = loginDto;
 
@@ -40,12 +46,19 @@ export class AuthService {
     return { token: token, userInfo: user };
   }
 
+  /**
+   * this is function is used to create Todo in Todo service.
+   * @param createDto this will type of data in which
+   * we have defined what are the keys we are expecting from body
+   * @returns promise of user with the token
+   */
   async register(createDto: RegisterUserDto): Promise<any> {
     // Check if the new email is already in use by another user
     const existingUserWithSameEmail = await this.userService.getUserByEmail(
       createDto.email,
     );
 
+    // Check if the new email is already in use by another user
     if (existingUserWithSameEmail) {
       return { message: 'Email is already in use by another user.' };
     }

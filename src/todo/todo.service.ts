@@ -6,7 +6,10 @@ import { Todo, User } from '@prisma/client';
 export class TodoService {
   constructor(private prisma: PrismaService) {}
 
-  // Get all todos
+  /**
+   * this function is used to get all the todos's list
+   * @returns promise of array of todos
+   */
   async getAllTodos(): Promise<Todo[]> {
     return this.prisma.todo.findMany({
       include: {
@@ -15,14 +18,22 @@ export class TodoService {
     });
   }
 
-  // Retrieve user information by userId
+  /**
+   * this function used to get data of use whose id is passed in parameter
+   * @param userId is type of string, which represent the id of user.
+   * @returns promise of user with the id passed in parameter
+   */
   async getUserById(userId: number): Promise<User | null> {
     return this.prisma.user.findUnique({
       where: { id: userId },
     });
   }
 
-  // Retrieve remaining todos of the logged-in user ordered by date and priority
+  /**
+   * this function used to get data of use whose id is passed in parameter
+   * @param userId is type of number, which represent the id of user.
+   * @returns promise of user with the todo that he has and ordered by date and priority
+   */
   async getRemainingTodosForUser(userId: number): Promise<Todo[]> {
     try {
       const todos = await this.prisma.todo.findMany({
@@ -50,7 +61,12 @@ export class TodoService {
     }
   }
 
-  // Create a new todo
+  /**
+   * this is function is used to create Todo in Todo service.
+   * @param data this will type of data in which
+   * we have defined what are the keys we are expecting from body
+   * @returns promise of todo
+   */
   async createTodo(data: Todo): Promise<Todo> {
     // Retrieve user information
     const user = await this.getUserById(data.userId);
@@ -71,6 +87,13 @@ export class TodoService {
     });
   }
 
+  /**
+   * this function is used to updated specific todo whose id is passed in
+   * body along with passed updated data
+   * @param id is type of number, which represent the id of todo.
+   * @param data this is partial type of data of the todo to be edited.
+   * @returns promise of udpate todo
+   */
   async updateTodo(
     id: number,
     data: Todo,
@@ -86,6 +109,11 @@ export class TodoService {
     });
   }
 
+  /**
+   * this function is used to remove or delete todo from database.
+   * @param id is the type of number, which represent id of todo
+   * @returns message of the todo deleted from database
+   */
   async deleteTodo(id: number): Promise<Todo | { message: string }> {
     // Check if the todo with the specified id exists
     const existingTodo = await this.prisma.todo.findUnique({

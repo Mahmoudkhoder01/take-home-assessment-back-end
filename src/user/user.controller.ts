@@ -52,11 +52,11 @@ export class UserController {
     @Res() res: Response,
   ): Promise<Response<User>> {
     try {
-      // Check if the new email is already in use by another user
       const existingUserWithSameEmail = await this.userService.getUserByEmail(
         postData.email,
       );
 
+      // Check if the new email is already in use by another user
       if (existingUserWithSameEmail) {
         // Handle the case where the email is already in use
         return res

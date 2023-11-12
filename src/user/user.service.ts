@@ -85,7 +85,6 @@ export class UserService {
     id: number,
     data: User,
   ): Promise<User | { message: string }> {
-    // Check if the new email is already in use by another user
     const existingUserWithSameEmail = await this.prisma.user.findFirst({
       where: {
         email: data.email,
@@ -93,6 +92,7 @@ export class UserService {
       },
     });
 
+    // Check if the new email is already in use by another user
     if (existingUserWithSameEmail) {
       return { message: 'Email is already in use by another user.' };
     }

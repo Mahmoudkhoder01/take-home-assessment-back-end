@@ -8,10 +8,12 @@ import {
   Put,
   Param,
   Delete,
+  UseGuards,
 } from '@nestjs/common';
 import { Request, Response } from 'express';
 import { TodoService } from './todo.service';
 import { Todo } from '@prisma/client';
+import { JwtAuthGuard } from 'src/authentication/auth.guard';
 
 @Controller('todo')
 export class TodoController {
@@ -32,6 +34,7 @@ export class TodoController {
   }
 
   @Get('remaining/:userId')
+  @UseGuards(JwtAuthGuard)
   async getRemainingTodosForUser(
     @Param('userId') userId: number,
   ): Promise<Todo[]> {
@@ -39,6 +42,7 @@ export class TodoController {
   }
 
   @Post()
+  @UseGuards(JwtAuthGuard)
   async createTodo(
     @Body() postData: Todo,
     @Req() req: Request,
@@ -54,15 +58,16 @@ export class TodoController {
     }
   }
 
-  @Put(':id')
+  @Put()
+  @UseGuards(JwtAuthGuard)
   async updateTodo(
-    @Param('id') id: number,
-    @Body() data: Todo,
+    @Body() data: { id: number; todo: Todo },
     @Req() req: Request,
     @Res() res: Response,
   ) {
     try {
-      const result = await this.todoService.updateTodo(id, data);
+      const { id, todo } = data;
+      const result = await this.todoService.updateTodo(id, todo);
 
       return res
         .status(200)
@@ -75,6 +80,7 @@ export class TodoController {
   }
 
   @Delete(':id')
+  @UseGuards(JwtAuthGuard)
   async deleteTodo(
     @Param('id') id: number,
     @Req() req: Request,

@@ -19,6 +19,11 @@ import { JwtAuthGuard } from '../authentication/auth.guard';
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
+  /**
+   * we have used get decorator to get all the user's list
+   * so the API URL will be
+   * GET http://localhost:3000/user
+   */
   @Get()
   @UseGuards(JwtAuthGuard)
   async getAllUsers(@Req() req: Request, @Res() res: Response): Promise<any> {
@@ -34,6 +39,12 @@ export class UserController {
     }
   }
 
+  /**
+   * Post decorator represents method of request as we have used post decorator the method
+   * of this API will be post.
+   * so the API URL to create User will be
+   * POST http://localhost:3000/user
+   */
   @Post()
   async postUser(
     @Body() postData: User,
@@ -63,6 +74,11 @@ export class UserController {
     }
   }
 
+  /**
+   * we have used get decorator with id param to get id from request
+   * so the API URL will be
+   * GET http://localhost:3000/user/:id
+   */
   @Get(':id')
   async getUser(
     @Param('id') id: number,
@@ -81,6 +97,11 @@ export class UserController {
     }
   }
 
+  /**
+   * we have used put decorator with id param to get id from request
+   * so the API URL will be
+   * PUT http://localhost:3000/user/:id
+   */
   @Put(':id')
   async updateUser(
     @Param('id') id: number,
@@ -107,6 +128,11 @@ export class UserController {
     }
   }
 
+  /**
+   * we have used Delete decorator with id param to get id from request
+   * so the API URL will be
+   * DELETE http://localhost:3000/user/:id
+   */
   @Delete(':id')
   async deleteUser(
     @Param('id') id: number,

@@ -6,7 +6,10 @@ import { Injectable } from '@nestjs/common';
 export class UserService {
   constructor(private prisma: PrismaService) {}
 
-  // Get all users
+  /**
+   * this function is used to get all the user's list
+   * @returns promise of array of users
+   */
   async getAllUsers(): Promise<User[]> {
     return this.prisma.user.findMany({
       include: {
@@ -15,7 +18,11 @@ export class UserService {
     });
   }
 
-  // Get user by id and include their todos with specific sorting
+  /**
+   * this function used to get data of use whose id is passed in parameter
+   * @param id is type of number, which represent the id of user.
+   * @returns promise of user with the todo that he has and ordered by date and priority
+   */
   async getUserById(id: number): Promise<User | null> {
     const currentDate = new Date();
     currentDate.setHours(0, 0, 0, 0); // Set the time to midnight (00:00:00.000)
@@ -39,6 +46,11 @@ export class UserService {
     });
   }
 
+  /**
+   * this function used to get data of use whose email is passed in parameter
+   * @param email is type of string, which represent the email of user.
+   * @returns promise of user with the email passed in parameter
+   */
   async getUserByEmail(email: string): Promise<User | null> {
     return this.prisma.user.findFirst({
       where: {
@@ -47,7 +59,12 @@ export class UserService {
     });
   }
 
-  // Create a new user
+  /**
+   * this is function is used to create User in User service.
+   * @param data this will type of data in which
+   * we have defined what are the keys we are expecting from body
+   * @returns promise of user
+   */
   async createUser(data: User): Promise<User> {
     // If the email is not taken, proceed with user creation
     const newUser = await this.prisma.user.create({
@@ -57,7 +74,13 @@ export class UserService {
     return newUser;
   }
 
-  // Update user by id
+  /**
+   * this function is used to updated specific user whose id is passed in
+   * parameter along with passed updated data
+   * @param id is type of number, which represent the id of user.
+   * @param data this is partial type of data of the user to be edited.
+   * @returns promise of udpate user
+   */
   async updateUser(
     id: number,
     data: User,
@@ -81,7 +104,11 @@ export class UserService {
     });
   }
 
-  // Delte user by id
+  /**
+   * this function is used to remove or delete user from database.
+   * @param id is the type of number, which represent id of user
+   * @returns message of the user deleted from database
+   */
   async deleteUser(id: number): Promise<User | { message: string }> {
     // Find and delete associated todos
     const todosToDelete = await this.prisma.todo.findMany({

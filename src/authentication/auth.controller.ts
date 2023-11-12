@@ -12,6 +12,12 @@ export class AuthController {
     private readonly userService: UserService,
   ) {}
 
+  /**
+   * Post decorator represents method of request as we have used post decorator the method
+   * of this API will be post.
+   * so the API URL to login will be
+   * POST http://localhost:3000/auth/login
+   */
   @Post('login')
   async login(
     @Req() req: Request,
@@ -31,6 +37,12 @@ export class AuthController {
     }
   }
 
+  /**
+   * Post decorator represents method of request as we have used post decorator the method
+   * of this API will be post.
+   * so the API URL to create an auth user will be
+   * POST http://localhost:3000/auth/register
+   */
   @Post('register')
   async register(
     @Req() req: Request,

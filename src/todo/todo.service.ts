@@ -66,6 +66,7 @@ export class TodoService {
         priority: data.priority,
         userId: data.userId, // Associate the todo with the user
         date: data.date,
+        completed: data.completed,
       },
     });
   }
@@ -80,6 +81,7 @@ export class TodoService {
         description: data.description,
         priority: data.priority,
         date: data.date,
+        completed: data.completed,
       },
     });
   }

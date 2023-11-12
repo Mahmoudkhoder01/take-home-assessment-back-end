@@ -17,7 +17,8 @@ CREATE TABLE "Todo" (
     "description" TEXT NOT NULL,
     "priority" "Priority" NOT NULL,
     "userId" INTEGER NOT NULL,
-    "date" TIMESTAMP(3) NOT NULL,
+    "date" TEXT NOT NULL,
+    "completed" BOOLEAN NOT NULL DEFAULT false,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
 
